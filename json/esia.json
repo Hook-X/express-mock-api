@@ -1,0 +1,17 @@
+{
+  "first": {
+    "status": 0,
+    "message": "Cnhjrf",
+    "data": {
+      "status": "DONE",
+      "delay": 500,
+      "maxAttempts": 6
+    }
+  },
+  "second": {
+    "status": 0,
+    "message": "Cnhjrf",
+    "data": {
+    }
+  }
+}
