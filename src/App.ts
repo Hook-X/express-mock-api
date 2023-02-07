@@ -32,9 +32,13 @@ export class App {
 	) {
 		const pathToCert = path.resolve() + '/ssl/cert.crt';
 		const pathToKey = path.resolve() + '/ssl/key.key';
+		const pathToRoot = path.resolve() + '/ssl/root.crt';
+		const pathToBetween = path.resolve() + '/ssl/between.crt';
 
 		const certificate = fs.readFileSync(pathToCert, 'utf8');
 		const privateKey = fs.readFileSync(pathToKey, 'utf8');
+		const rootSert = fs.readFileSync(pathToRoot, 'utf8');
+		const between = fs.readFileSync(pathToBetween, 'utf8');
 
 		this.app = express();
 
@@ -46,6 +50,9 @@ export class App {
 			{
 				key: privateKey,
 				cert: certificate,
+                ca: [
+                    rootSert, between
+                ]
 			},
 			this.app,
 		);
