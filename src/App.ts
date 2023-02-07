@@ -12,13 +12,17 @@ import { json } from 'body-parser';
 import { MasterServiceController } from './MasterService/MasterService.service';
 import fs from 'fs';
 import * as https from 'https';
+import * as http from 'http';
 import path from 'path';
 
 @injectable()
 export class App {
 	public app: Express;
-	//public server: Server;
+	public serverHttp: Server;
+	public serverHttps: Server;
 	public port: number;
+	public portHttps: number;
+
 	constructor(
 		@inject(TYPES.ILogger) private logger: ILogger,
 		@inject(TYPES.UserController) private userController: UsersController,
@@ -29,23 +33,25 @@ export class App {
 		const pathToCert = path.resolve() + '/ssl/cert.pem';
 		const pathToKey = path.resolve() + '/ssl/key.pem';
 
-		const certificate = fs.readFileSync(pathToCert);
-		const privateKey = fs.readFileSync(pathToKey);
+		const certificate = fs.readFileSync(pathToCert, 'utf8');
+		const privateKey = fs.readFileSync(pathToKey, 'utf8');
 
 		this.app = express();
 
-		this.port = 80;
+		this.port = 8080;
+		this.portHttps = 8443;
 
-		https
-			.createServer(
-				{
-					key: privateKey,
-					cert: certificate,
-				},
-				this.app,
-			)
-			.listen(this.port);
-		// http.createServer(this.app).listen(this.port);
+		this.serverHttp = http.createServer(this.app);
+		this.serverHttps = https.createServer(
+			{
+				key: privateKey,
+				cert: certificate,
+			},
+			this.app,
+		);
+
+		this.serverHttp.listen(this.port);
+		this.serverHttps.listen(this.portHttps);
 		this.useStatic.bind(this);
 	}
 
