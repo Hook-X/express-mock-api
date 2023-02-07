@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "node ./dist/src/main.js",
-    "restart": "tsc && node ./dist/src/main.js",
+    "restart": "rm -rf ./dist tsc && node ./dist/src/main.js",
     "watch": "nodemon ./dist/src/main.js",
     "lint": "eslint ./src/**",
     "lint:fix": "eslint ./src/** --fix",
