@@ -9,6 +9,8 @@ import { UsersController } from './users/users.controller';
 import { IUserController } from './users';
 import { IEsiaController } from './esia/esia.types';
 import { EsiaController } from './esia/esia.controller';
+import { IMasterServiceController } from './MasterService';
+import { MasterServiceController } from './MasterService/MasterService.service';
 
 export interface IBootstrapReturn {
 	app: App;
@@ -20,6 +22,7 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<IExceptionFilter>(TYPES.IExceptionFilter).to(ExceptionFilter);
 	bind<IUserController>(TYPES.UserController).to(UsersController);
 	bind<IEsiaController>(TYPES.EsiaController).to(EsiaController);
+	bind<IMasterServiceController>(TYPES.MasterServiceController).to(MasterServiceController);
 	bind<App>(TYPES.Application).to(App);
 });
 
