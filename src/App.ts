@@ -30,16 +30,16 @@ export class App {
 		@inject(TYPES.EsiaController) private esiaController: EsiaController,
 		@inject(TYPES.MasterServiceController) private masterServiceController: MasterServiceController,
 	) {
-		const pathToCert = path.resolve() + '/ssl/cert.pem';
-		const pathToKey = path.resolve() + '/ssl/key.pem';
+		const pathToCert = path.resolve() + '/ssl/cert.crt';
+		const pathToKey = path.resolve() + '/ssl/key.key';
 
 		const certificate = fs.readFileSync(pathToCert, 'utf8');
 		const privateKey = fs.readFileSync(pathToKey, 'utf8');
 
 		this.app = express();
 
-		this.port = 8080;
-		this.portHttps = 8443;
+		this.port = 80;
+		this.portHttps = 443;
 
 		this.serverHttp = http.createServer(this.app);
 		this.serverHttps = https.createServer(
