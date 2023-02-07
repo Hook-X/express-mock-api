@@ -38,8 +38,8 @@ export class App {
 
 		this.app = express();
 
-		this.port = 80;
-		this.portHttps = 443;
+		this.port = 8080;
+		this.portHttps = 8443;
 
 		this.serverHttp = http.createServer(this.app);
 		this.serverHttps = https.createServer(
