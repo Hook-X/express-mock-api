@@ -24,7 +24,7 @@ export class App {
 		@inject(TYPES.MasterServiceController) private masterServiceController: MasterServiceController,
 	) {
 		this.app = express();
-		this.port = 5555;
+		this.port = 80;
 		this.server = this.app.listen(this.port);
 		this.useStatic.bind(this);
 	}
