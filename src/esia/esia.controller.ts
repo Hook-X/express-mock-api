@@ -7,7 +7,7 @@ import { HttpError } from '../errors/http-error.class';
 import { IEsiaController } from './esia.types';
 import path from 'path';
 import fs from 'fs';
-import {PhoneConfirmDto} from "../DTO/phoneConfirmDto.dto";
+import { PhoneConfirmDto } from '../DTO/phoneConfirmDto.dto';
 
 export enum DigitalProfileRequestStatusType {
 	Success = 0,
@@ -83,7 +83,6 @@ export class EsiaController extends BaseController implements IEsiaController {
 	}
 
 	public getRegistry(req: Request, res: Response, next: NextFunction): void {
-
 		res.status(200);
 		res.send(JSON.stringify(UUID_RESPONSE));
 	}

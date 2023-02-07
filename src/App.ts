@@ -10,11 +10,14 @@ import cors from 'cors';
 import { EsiaController } from './esia/esia.controller';
 import { json } from 'body-parser';
 import { MasterServiceController } from './MasterService/MasterService.service';
+import fs from 'fs';
+import * as https from 'https';
+import path from 'path';
 
 @injectable()
 export class App {
 	public app: Express;
-	public server: Server;
+	//public server: Server;
 	public port: number;
 	constructor(
 		@inject(TYPES.ILogger) private logger: ILogger,
@@ -23,9 +26,26 @@ export class App {
 		@inject(TYPES.EsiaController) private esiaController: EsiaController,
 		@inject(TYPES.MasterServiceController) private masterServiceController: MasterServiceController,
 	) {
+		const pathToCert = path.resolve() + '/ssl/cert.pem';
+		const pathToKey = path.resolve() + '/ssl/key.pem';
+
+		const certificate = fs.readFileSync(pathToCert);
+		const privateKey = fs.readFileSync(pathToKey);
+
 		this.app = express();
+
 		this.port = 80;
-		this.server = this.app.listen(this.port);
+
+		https
+			.createServer(
+				{
+					key: privateKey,
+					cert: certificate,
+				},
+				this.app,
+			)
+			.listen(this.port);
+		// http.createServer(this.app).listen(this.port);
 		this.useStatic.bind(this);
 	}
 
