@@ -30,11 +30,10 @@ export class App {
 		@inject(TYPES.EsiaController) private esiaController: EsiaController,
 		@inject(TYPES.MasterServiceController) private masterServiceController: MasterServiceController,
 	) {
-		const root = '/root/';
-		const pathToCert = root + path.resolve() + '/ssl/cert.crt';
-		const pathToKey = root + path.resolve() + '/ssl/key.key';
-		const pathToRoot = root + path.resolve() + '/ssl/root.crt';
-		const pathToBetween = root + path.resolve() + '/ssl/between.crt';
+		const pathToCert = path.resolve() + '/ssl/cert.crt';
+		const pathToKey = path.resolve() + '/ssl/key.key';
+		const pathToRoot = path.resolve() + '/ssl/root.crt';
+		const pathToBetween = path.resolve() + '/ssl/between.crt';
 
 		const certificate = fs.readFileSync(pathToCert, 'utf8');
 		const privateKey = fs.readFileSync(pathToKey, 'utf8');
@@ -51,7 +50,9 @@ export class App {
 			{
 				key: privateKey,
 				cert: certificate,
-				ca: [rootSert, between],
+                ca: [
+                    rootSert, between
+                ]
 			},
 			this.app,
 		);
@@ -90,6 +91,5 @@ export class App {
 		this.useRouters();
 		this.useExceptionFilter();
 		this.logger.log(`Сервер запущен на http://localhost:${this.port}`);
-		this.logger.log(`/root/${path.resolve()}/ssl/cert.crt`);
 	}
 }
