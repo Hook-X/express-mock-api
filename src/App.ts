@@ -10,18 +10,11 @@ import cors from 'cors';
 import { EsiaController } from './esia/esia.controller';
 import { json } from 'body-parser';
 import { MasterServiceController } from './MasterService/MasterService.service';
-import fs from 'fs';
-import * as https from 'https';
-import * as http from 'http';
-import path from 'path';
 
 @injectable()
 export class App {
 	public app: Express;
-	public serverHttp: Server;
-	public serverHttps: Server;
 	public port: number;
-	public portHttps: number;
 
 	constructor(
 		@inject(TYPES.ILogger) private logger: ILogger,
@@ -36,28 +29,16 @@ export class App {
 		const pathToRoot = relativePath + '/ssl/root.crt';
 		const pathToBetween = relativePath + '/ssl/between.crt';
 
-		const certificate = fs.readFileSync(pathToCert, 'utf8');
-		const privateKey = fs.readFileSync(pathToKey, 'utf8');
-		const rootSert = fs.readFileSync(pathToRoot, 'utf8');
-		const between = fs.readFileSync(pathToBetween, 'utf8');
+		// const certificate = fs.readFileSync(pathToCert, 'utf8');
+		// const privateKey = fs.readFileSync(pathToKey, 'utf8');
+		// const rootSert = fs.readFileSync(pathToRoot, 'utf8');
+		// const between = fs.readFileSync(pathToBetween, 'utf8');
 
 		this.app = express();
 
 		this.port = 8080;
-		this.portHttps = 8443;
 
-		this.serverHttp = http.createServer(this.app);
-		this.serverHttps = https.createServer(
-			{
-				key: privateKey,
-				cert: certificate,
-				ca: [rootSert, between],
-			},
-			this.app,
-		);
-
-		this.serverHttp.listen(this.port);
-		this.serverHttps.listen(this.portHttps);
+		this.app.listen(this.port);
 		this.useStatic.bind(this);
 	}
 
