@@ -30,8 +30,8 @@ export class App {
 		@inject(TYPES.EsiaController) private esiaController: EsiaController,
 		@inject(TYPES.MasterServiceController) private masterServiceController: MasterServiceController,
 	) {
-		const relativePath = './express-mock-api/';
-		const pathToCert = relativePath + 'express-mock-api/ssl/cert.crt';
+		const relativePath = './express-mock-api';
+		const pathToCert = relativePath + '/ssl/cert.crt';
 		const pathToKey = relativePath + '/ssl/key.key';
 		const pathToRoot = relativePath + '/ssl/root.crt';
 		const pathToBetween = relativePath + '/ssl/between.crt';
