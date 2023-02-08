@@ -30,10 +30,11 @@ export class App {
 		@inject(TYPES.EsiaController) private esiaController: EsiaController,
 		@inject(TYPES.MasterServiceController) private masterServiceController: MasterServiceController,
 	) {
-		const pathToCert = path.resolve() + '/ssl/cert.crt';
-		const pathToKey = path.resolve() + '/ssl/key.key';
-		const pathToRoot = path.resolve() + '/ssl/root.crt';
-		const pathToBetween = path.resolve() + '/ssl/between.crt';
+		const relativePath = './express-mock-api/';
+		const pathToCert = relativePath + 'express-mock-api/ssl/cert.crt';
+		const pathToKey = relativePath + '/ssl/key.key';
+		const pathToRoot = relativePath + '/ssl/root.crt';
+		const pathToBetween = relativePath + '/ssl/between.crt';
 
 		const certificate = fs.readFileSync(pathToCert, 'utf8');
 		const privateKey = fs.readFileSync(pathToKey, 'utf8');
@@ -50,9 +51,7 @@ export class App {
 			{
 				key: privateKey,
 				cert: certificate,
-                ca: [
-                    rootSert, between
-                ]
+				ca: [rootSert, between],
 			},
 			this.app,
 		);
